@@ -9,7 +9,7 @@ namespace Solicitudes.API.Aplicacion
         public static IServiceCollection AddService(this IServiceCollection services)
         {
 
-            //SGA: registrO ITransaccionesServicio dentro del método AddService()
+            
             services.AddScoped<IUsuarioServicio, UsuarioServicio>();
             services.AddScoped<ISolicitudService, SolicitudService>();
 
