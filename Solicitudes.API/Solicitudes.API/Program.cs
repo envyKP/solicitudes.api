@@ -8,6 +8,17 @@ using Solicitudes.API.Entidades.Mapper;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        builder =>
+        {
+            builder
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -18,17 +29,14 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // AutoMapper
-//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); muy generalizada
 builder.Services.AddAutoMapper(typeof(configMapper));
 builder.Services.AddAutoMapper(typeof(SolicitudMapper));
 
 
-// Inyección de dependencias de la capa Aplicación
+// InyecciÃ³n de dependencias de la capa AplicaciÃ³n
 builder.Services.AddService();
-
-
-
-// Conexión a la base de datos
+// Conexion a la base de datos
 builder.Services.AddDbContext<SolicitudesContextBD>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SolicitudesConnection")));
 
@@ -47,6 +55,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Agregar CORS antes de la autorizaciÃ³n
+app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 

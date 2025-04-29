@@ -42,6 +42,28 @@ namespace Solicitudes.API.Aplicacion.Servicios
                     : mensajeError;
             }
         }
+    public async Task<SolicitudDTO> consultaSolicitudPorID(int id)
+        {
+            try
+            {   // consulto la transaccion de la capa de repositorio
+                var trxExistente = await _repositorio.consultaSolicitudPorID(id);
+                // Si no se encuentra retornar null
+                if (trxExistente == null)
+                {
+                    return null;
+                }
+                // Mapear la entidad a DTO
+                var SolicitudDTO = _mapper.Map<SolicitudDTO>(trxExistente);
+
+                return SolicitudDTO;
+            }
+            catch (Exception ex)
+            {
+                // Manejo de error y retornando null si ocurre un fallo
+                return null;
+            }
+        }
+        
 
     }
 }

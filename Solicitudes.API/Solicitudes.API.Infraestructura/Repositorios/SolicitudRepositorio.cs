@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Solicitudes.API.Aplicacion.Interfaces.IRepositorios;
 using Solicitudes.API.Entidades.Entities;
 using Solicitudes.API.Infraestructura.Context;
@@ -30,11 +29,11 @@ namespace Solicitudes.API.Infraestructura.Repositorios
                 // Llamamos al SP y pasamos los parámetros desde el DTO
                 await _context.Database.ExecuteSqlRawAsync(
                     "EXEC sp_crear_solicitudes @descripcion, @monto, @fecha_esperada, @estado, @comentario",
-                    new SqlParameter("@descripcion", solicitud.DESCRIPCION),
-                    new SqlParameter("@monto", solicitud.MONTO),
-                    new SqlParameter("@fecha_esperada", solicitud.FECHA_ESPERADA),
-                    new SqlParameter("@estado", solicitud.ESTADO),
-                    new SqlParameter("@comentario", solicitud.COMENTARIO)
+                    new Microsoft.Data.SqlClient.SqlParameter("@descripcion", solicitud.DESCRIPCION),
+                    new Microsoft.Data.SqlClient.SqlParameter("@monto", solicitud.MONTO),
+                    new Microsoft.Data.SqlClient.SqlParameter("@fecha_esperada", solicitud.FECHA_ESPERADA),
+                    new Microsoft.Data.SqlClient.SqlParameter("@estado", solicitud.ESTADO),
+                    new Microsoft.Data.SqlClient.SqlParameter("@comentario", solicitud.COMENTARIO)
                 );
 
                 return "Solicitud creada exitosamente.";
@@ -45,7 +44,12 @@ namespace Solicitudes.API.Infraestructura.Repositorios
                 string mensajeError = ex.InnerException?.Message ?? ex.Message;
                 return mensajeError.Length > 400 ? mensajeError.Substring(0, 400) : mensajeError;
             }
-
         }
+         public async Task<TBL_SOLICITUD> consultaSolicitudPorID(int id)
+        {
+            // Buscamos la transaccion por su ID
+            return await _context.TBL_SOLICITUD.FirstOrDefaultAsync(t => t.ID == id);
+        }
+
     }
 }

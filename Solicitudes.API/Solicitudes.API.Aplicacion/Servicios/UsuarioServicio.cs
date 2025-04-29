@@ -27,10 +27,8 @@ namespace Solicitudes.API.Aplicacion.Servicios
         public async Task<UsuarioDTO> consultaUsuarioPorID(int id)
         {
             try
-            {
-                // consulto la transaccion de la capa de repositorio
+            {   // consulto la transaccion de la capa de repositorio
                 var trxExistente = await _usuariosRepositorio.consultaUsuarioPorID(id);
-
                 // Si no se encuentra retornar null
                 if (trxExistente == null)
                 {

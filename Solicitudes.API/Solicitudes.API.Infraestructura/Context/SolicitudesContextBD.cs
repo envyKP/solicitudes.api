@@ -75,7 +75,7 @@ public partial class SolicitudesContextBD : DbContext
         modelBuilder.Entity<TBL_SOLICITUD>(entity =>
         {
             entity.HasKey(e => e.ID);
-            entity.ToTable("TBL_SOLICITUD");
+            entity.ToTable("TBL_SOLICITUDES");
 
             entity.Property(e => e.DESCRIPCION)
                 .IsRequired()
@@ -113,7 +113,7 @@ public partial class SolicitudesContextBD : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
 
-            entity.Property(e => e.TELEFONO)
+            entity.Property(e => e.CLAVE)
                 .IsRequired()
                 .HasMaxLength(15)
                 .IsUnicode(false);

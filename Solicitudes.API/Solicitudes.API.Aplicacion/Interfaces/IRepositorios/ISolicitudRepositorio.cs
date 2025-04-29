@@ -12,6 +12,7 @@ namespace Solicitudes.API.Aplicacion.Interfaces.IRepositorios
     public interface ISolicitudRepositorio
     {
         Task<string> GuardarSolicitudAsync(TBL_SOLICITUD solicitud);
+        public Task<TBL_SOLICITUD> consultaSolicitudPorID(int id);
     }
 
 }
